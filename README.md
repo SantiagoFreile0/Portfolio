@@ -5,7 +5,8 @@ Welcome to my Data Science portfolio! Here you'll find a selection of projects t
 ## Projects
 
 1. [Real Estate Price Estimator (R & Shiny)](./real-estate-price-estimator/README.md)
-   An interactive web app built with Shiny that estimates real estate prices using linear models, data visualization, and mapping. Future plans include incorporating machine learning models to improve predictions.
+
+An interactive web app built with Shiny that estimates real estate prices using linear models, data visualization, and mapping. Future plans include incorporating machine learning models to improve predictions.
 
 2. [OSINT Tool (Python)](./osint-tool/README.md)  
    A Python application that gathers publicly available information about people by searching names and usernames across social media and the internet. Built to assist in open-source intelligence investigations.
