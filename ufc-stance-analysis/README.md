@@ -1,10 +1,10 @@
-🥋 UFC Data Analysis Project
+# 🥋 UFC Data Analysis Project
 
-📈 Interactive Data Exploration in R
+## 📈 Interactive Data Exploration in R
 
 This project explores data related to UFC fights, using R and R Markdown to analyze fighter statistics, fight outcomes, and performance trends.
 
-🧠 Technologies Used
+## 🧠 Technologies Used
 
 - R
 - R Markdown (.Rmd)
@@ -12,14 +12,14 @@ This project explores data related to UFC fights, using R and R Markdown to anal
 - ggplot2
 - dplyr
 
-📌 Features
+## 📌 Features
 
 - Fighter performance comparison
 - Visualizations of strike accuracy, takedowns, and more
 - Win/loss trends over time
 - Exploratory analysis with clean visuals
 
-🌐 View the Analysis
+## 🌐 View the Analysis
 
 You can view the HTML version here:  
 [🔗 UFC-analysis.html](./UFC-analysis.html)
