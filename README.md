@@ -13,10 +13,7 @@ Welcome to my Data Science portfolio! Here you'll find a selection of projects t
 3. [Neuroscience Burnout Analysis (Upcoming)](./neuroscience-burnout/README.md)  
    A forthcoming project exploring burnout in neuroscience, aimed at analyzing relevant datasets to understand causes and effects.
 
-4. [Data Science Salary Analysis (R)](./data-science-salary-analysis/README.md)  
-   An exploratory data analysis project examining factors influencing salaries in the data science field, with engaging and clear visualizations.
-
-5. [UFC Stance Analysis (Statistics & Visualization)](./ufc-stance-analysis/README.md)  
+4. [UFC Stance Analysis (Statistics & Visualization)](./ufc-stance-analysis/README.md)  
    A statistical study to identify the most effective fighting stance in UFC, supported by data-driven visualizations.
 
 ---
