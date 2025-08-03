@@ -1,6 +1,6 @@
 # Santiago Freile - Data Science Portfolio
 
-Welcome to my Data Science portfolio! Here you'll find a selection of projects showcasing my skills in data analysis, visualization, app development, and machine learning.
+Welcome to my Data Science portfolio! Here you'll find a selection of projects showcasing my experience with **data-driven decision making**, **statistical modeling**, **interactive dashboards**, **open-source tools**, and **machine learning workflows**. Each project highlights real-world applications in domains such as real estate, cybersecurity, and sports analytics.
 
 ## Projects
 
