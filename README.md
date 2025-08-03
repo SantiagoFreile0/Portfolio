@@ -7,13 +7,13 @@ Welcome to my Data Science portfolio! Here you'll find a selection of projects s
 1. [Real Estate Price Estimator (R & Shiny)](./real-estate-price-estimator)  
    An interactive web app built with Shiny that estimates real estate prices using linear models, data visualization, and mapping. Future plans include incorporating machine learning models to improve predictions.
 
-2. [OSINT Tool (Python)](./osint-tool/README.md)  
+2. [OSINT Tool (Python)](./osint-tool)  
    A Python application that gathers publicly available information by searching names and usernames across social media and the internet. Built to assist open-source intelligence investigations.
 
-3. [Neuroscience Burnout Analysis (Upcoming)](./neuroscience-burnout/README.md)  
+3. [Neuroscience Burnout Analysis (Upcoming)](./neuroscience-burnout)  
    An upcoming project exploring burnout in neuroscience, aimed at analyzing datasets to understand causes and effects.
 
-4. [UFC Stance Analysis (Statistics & Visualization)](./ufc-stance-analysis/README.md)  
+4. [UFC Stance Analysis (Statistics & Visualization)](./ufc-stance-analysis)  
    A statistical study identifying the most effective fighting stance in UFC, supported by data-driven visualizations.
 
 ---
