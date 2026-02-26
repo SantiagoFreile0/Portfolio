@@ -1,7 +1,7 @@
 # Santiago Freile | Data Science & Machine Learning Portfolio
 
-Welcome to my Data Science portfolio! Here you will find projects exploring areas I’m interested in, including Quantitative Finance, Neuroscience, and Cybersecurity. In these projects, I apply skills like statistical modeling, predictive analytics, machine learning, signal processing, network and threat analysis, data visualization, and data management to tackle real-world problems and extract meaningful insights.
-My goal is to help businesses and people make sense of complex data and communicate findings clearly.
+Welcome to my Data Science portfolio. Here you will find projects I’ve worked on in finance, neuroscience, cybersecurity, and sports analytics. In these projects, I use machine learning, neural networks, data analysis, visualization, and database management to understand patterns in the data and communicate the results in a way that people can actually use.
+My goal is to create solutions that are useful for businesses and understandable for people, not just numbers on a screen.
 
 ## Projects
 
