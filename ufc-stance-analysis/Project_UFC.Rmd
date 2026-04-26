@@ -1,0 +1,368 @@
+---
+title: "UFC Analysis: Does Stance Influence Success?"
+author: "Santiago Freile"
+date: "May 2025"
+output: 
+  html_document:
+    theme: flatly
+    highlight: tango
+    toc: true
+    toc_float: true
+---
+
+## Introduction
+
+Fighters in the UFC adopt different stances — Orthodox, Southpaw, Switch, or Open — that are believed to shape their fighting style. This analysis investigates whether stance significantly influences competitive success. The central question is whether stance actually matters, or whether something else drives wins.
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(ggplot2)
+library(plotly)
+library(broom)
+library(kableExtra)
+```
+
+## Dataset
+
+The dataset was sourced from Kaggle and contains fighter statistics including physical attributes and performance metrics such as significant strikes, takedowns, and submissions.
+
+```{r}
+df <- read.csv("~/Desktop/Me/Linfield/2nd Semester/Data 299/Project UFC/ufc.csv")
+colnames(df)
+glimpse(df)
+```
+
+## Data Cleaning
+
+The dataset is filtered to relevant columns and cleaned of missing stance values. Win percentage is calculated as wins divided by total matches, providing a normalized measure of success regardless of career length.
+
+```{r}
+df2 <- df |>
+  select(name, stance, wins, losses, draws,
+         significant_strikes_landed_per_minute,
+         significant_strikes_absorbed_per_minute,
+         significant_strike_defence,
+         average_takedowns_landed_per_15_minutes,
+         average_submissions_attempted_per_15_minutes,
+         takedown_defense) |>
+  filter(!is.na(stance), stance != "")
+
+df2$stance <- as.factor(df2$stance)
+
+df2 <- df2 |>
+  mutate(
+    total_matches = wins + losses + draws,  
+    win_percentage = wins / total_matches
+  )
+```
+
+## Stance
+
+### Fighter Stance Distribution
+
+Orthodox is by far the most common stance, followed by Southpaw and Switch. Open Stance and Sideways are rare enough that conclusions about those categories should be interpreted carefully given the smaller sample sizes.
+
+```{r}
+df2 |>
+  count(stance) |>
+  ggplot(aes(x = reorder(stance, -n), y = n, fill = stance)) +
+  geom_bar(stat = "identity", show.legend = TRUE) +
+  geom_text(aes(label = n), vjust = -0.3, size = 4, family = "Times New Roman") +
+  scale_y_log10() +
+  labs(
+    title = "Number of Fighters per Stance",
+    subtitle = paste("Total Fighters:", sum(df2$stance %in% unique(df2$stance)), "| Log scale used on Y-axis"),
+    x = "Stance",
+    y = "Count",
+    fill = "Stance"
+  ) +
+  scale_fill_manual(values = c(
+    "Orthodox"    = "#D7263D",
+    "Southpaw"    = "#1B1B1E",
+    "Switch"      = "#F46036",
+    "Open Stance" = "#2E294E",
+    "Sideways"    = "#4E4E50"
+  )) +
+  theme_classic(base_family = "Times New Roman") +
+  theme(
+    plot.title = element_text(size = 18, face = "bold", hjust = 0.5),
+    plot.subtitle = element_text(size = 14, hjust = 0.5),
+    legend.position = "top",
+    legend.background = element_rect(color = "black", fill = "white", size = 0.5),
+    legend.title = element_text(face = "bold")
+  )
+```
+
+### Performance by Stance
+
+Three performance metrics are compared across stances: significant strikes landed per minute, average takedowns per 15 minutes, and significant strike defense. The distributions overlap considerably across stances, suggesting that stance alone does not separate fighters along these dimensions.
+
+```{r, fig.width=12, fig.height=6}
+metric_labels <- c(
+  significant_strikes_landed_per_minute = "Significant Strikes Landed / Min",
+  average_takedowns_landed_per_15_minutes = "Avg Takedowns Landed / 15 Min",
+  significant_strike_defence = "Significant Strike Defence (%)"
+)
+
+df3 <- df2 |>
+  pivot_longer(cols = c(significant_strikes_landed_per_minute,
+                        average_takedowns_landed_per_15_minutes,
+                        significant_strike_defence),
+               names_to = "metric", values_to = "value") |>
+  mutate(metric_label = metric_labels[metric])
+
+ggplot(df3, aes(x = stance, y = value, fill = stance)) +
+  geom_boxplot(outlier.shape = NA) +
+  geom_jitter(width = 0.2, alpha = 0.3, color = "black", size = 1) +
+  facet_wrap(~ metric_label, scales = "free_y", ncol = 3) + 
+  labs(title = "Performance Metrics by Stance",
+       x = "Stance", y = "Value", fill = "Stance") +          
+  scale_fill_manual(values = c(
+    "Orthodox" = "#D72631",    
+    "Open Stance" = "#F46036",  
+    "Sideways" = "#2E294E",     
+    "Southpaw" = "#1B998B",     
+    "Switch" = "#E71D36"        
+  )) +
+  theme_classic(base_family = "Times New Roman") +
+  theme(
+    plot.title = element_text(size = 18, face = "bold", hjust = 0.5),
+    legend.position = "top",
+    legend.title = element_text(face = "bold", size = 12),
+    legend.background = element_rect(color = "black", size = 0.5, linetype = "solid"),
+    strip.text = element_text(size = 14, face = "bold")  
+  )
+```
+
+### Wins by Stance
+
+Win percentage distributions are similar across stances. The median is roughly consistent, though variance differs. The smaller stances like Sideways and Open Stance show more erratic distributions, which is a function of sample size rather than stance effectiveness.
+
+```{r}
+plot4 <- df2 |>
+  ggplot(aes(x = stance, y = win_percentage, fill = stance)) +
+  geom_boxplot(width = 0.8) +  
+  coord_flip() +
+  labs(
+    title = "Win Percentage by Fighter Stance", 
+    x = "Stance",
+    y = "Win Percentage",
+    fill = "Stance") +
+  scale_y_continuous(labels = scales::percent_format(accuracy = 1)) + 
+  scale_fill_manual(values = c(
+    "Orthodox" = "#D72631",    
+    "Open Stance" = "#F46036",  
+    "Sideways" = "#2E294E",     
+    "Southpaw" = "#1B998B",     
+    "Switch" = "#E71D36"
+  )) +
+  theme_classic(base_family = "Times New Roman") +
+  theme(
+    plot.title = element_text(size = 18, face = "bold", hjust = 0.5),
+    legend.position = "top",
+    legend.title = element_text(face = "bold", size = 12),
+    legend.background = element_rect(color = "black", size = 0.5),
+    axis.text = element_text(size = 13),
+    axis.title = element_text(size = 15),
+    strip.text = element_text(size = 14, face = "bold")
+  )
+
+ggplotly(plot4)
+```
+
+## Statistics
+
+### Summary by Stance
+
+```{r}
+stance_summary <- df2 |>
+  group_by(stance) |>
+  summarise(
+    `Number of Fighters` = n(),
+    `Win %` = mean(win_percentage, na.rm = TRUE),
+    `Avg. Wins` = mean(wins, na.rm = TRUE),
+    `Avg. Losses` = mean(losses, na.rm = TRUE),
+    `Strikes Landed (per min)` = mean(significant_strikes_landed_per_minute, na.rm = TRUE),
+    `Strikes Absorbed (per min)` = mean(significant_strikes_absorbed_per_minute, na.rm = TRUE),
+    `Strike Defense (%)` = mean(significant_strike_defence, na.rm = TRUE),
+    `Takedowns (per 15 min)` = mean(average_takedowns_landed_per_15_minutes, na.rm = TRUE),
+    `Submission Attempts (per 15 min)` = mean(average_submissions_attempted_per_15_minutes, na.rm = TRUE),
+    `Takedown Defense (%)` = mean(takedown_defense, na.rm = TRUE)
+  )
+
+stance_summary |>
+  mutate(
+    `Win %` = scales::percent(`Win %`, accuracy = 0.1),
+  ) |>
+  kable(caption = "Summary Stats by Fighter Stance", digits = 2) |>
+  kable_styling()
+```
+
+### Win Percentage Variability
+
+```{r}
+stance_summary2 <- df2 |>
+  group_by(stance) |>
+  summarise(
+    count = n(),
+    avg_win_percentage = round(mean(win_percentage, na.rm = TRUE), 3),
+    sd_win_percentage = round(sd(win_percentage, na.rm = TRUE), 3)
+  )
+
+stance_summary2 |>
+  mutate(
+    avg_win_percentage = scales::percent(avg_win_percentage, accuracy = 0.1),
+    sd_win_percentage = scales::percent(sd_win_percentage, accuracy = 0.1)
+  ) |>
+  kable(caption = "Summary of Win Percentage by Stance") |>
+  kable_styling(bootstrap_options = c("striped", "hover"), full_width = FALSE, position = "left")
+```
+
+### t-test: Orthodox vs Southpaw
+
+```{r}
+df_subset <- df2 |> filter(stance %in% c("Orthodox", "Southpaw"))
+
+t_test_result <- t.test(win_percentage ~ stance, data = df_subset, alternative = "two.sided")
+
+t_test_result
+
+cat("95% confidence interval for the difference in mean win percentages:\n")
+cat(sprintf("[%.3f, %.3f]\n", t_test_result$conf.int[1], t_test_result$conf.int[2]))
+```
+
+The 95% confidence interval for the difference in win percentages between Orthodox and Southpaw fighters is [-0.022, 0.008]. Since this interval includes zero, there is no statistically significant difference between the two stances.
+
+## Linear Models
+
+### Model 1: Wins ~ Stance
+
+```{r}
+model1 <- lm(wins ~ stance, data = df2)
+summary(model1)
+
+tidy1 <- tidy(model1)
+tidy1$term <- gsub("stance", "", tidy1$term)
+
+ggplot(tidy1, aes(x = reorder(term, estimate), y = estimate)) +
+  geom_point(color = "#0072B2", size = 3) +
+  geom_errorbar(aes(ymin = estimate - std.error, ymax = estimate + std.error),
+                width = 0.2, size = 1) +
+  geom_text(aes(label = round(estimate, 2)),
+            vjust = -1.5,
+            family = "Times New Roman", size = 3.5, color = "gray20") +
+  theme_classic(base_family = "Times New Roman") +
+  coord_flip() +
+  labs(title = "Model 1: Effect of Stance on Wins",
+       x = "Stance",
+       y = "Estimated Coefficient") + 
+  theme(plot.title = element_text(size = 16, face = "bold", hjust = 0.5),
+        axis.text = element_text(size = 11),
+        axis.title = element_text(size = 12))
+```
+
+Stance alone is not a meaningful predictor of wins. The model is technically significant (p = 0.00026) but explains only 0.65% of the variance in wins (R² = 0.0065). The Sideways stance shows a marginally significant negative coefficient (p = 0.042), but given the model's weak explanatory power, this is unlikely to reflect anything practically meaningful.
+
+### Model 2: Wins ~ Stance + Performance Metrics
+
+```{r}
+model2 <- lm(wins ~ stance +
+               significant_strikes_landed_per_minute +
+               significant_strikes_absorbed_per_minute +
+               significant_strike_defence +
+               average_takedowns_landed_per_15_minutes +
+               average_submissions_attempted_per_15_minutes +
+               takedown_defense, data = df2)
+summary(model2)
+
+tidy2 <- tidy(model2)
+tidy2 <- tidy2 |>
+  mutate(term = case_when(
+    term == "stanceOrthodox" ~ "Orthodox",
+    term == "stanceSouthpaw" ~ "Southpaw",
+    term == "stanceSwitch" ~ "Switch",
+    term == "stanceSideways" ~ "Sideways",
+    term == "significant_strikes_landed_per_minute" ~ "Strikes Landed/min",
+    term == "significant_strikes_absorbed_per_minute" ~ "Strikes Absorbed/min",
+    term == "significant_strike_defence" ~ "Strike Defence %",
+    term == "average_takedowns_landed_per_15_minutes" ~ "Takedowns/15min",
+    term == "average_submissions_attempted_per_15_minutes" ~ "Submissions/15min",
+    term == "takedown_defense" ~ "Takedown Defence %",
+    TRUE ~ term
+  ))
+
+ggplot(tidy2, aes(x = reorder(term, estimate), y = estimate)) +
+  geom_point(color = "#D55E00", size = 3) +
+  geom_errorbar(aes(ymin = estimate - std.error, ymax = estimate + std.error),
+                width = 0.2, size = 1) +
+  geom_text(aes(label = round(estimate, 2)),
+            vjust = -1.5,
+            family = "Times New Roman", size = 3.5, color = "gray20") +
+  theme_classic(base_family = "Times New Roman") +
+  coord_flip() +
+  labs(title = "Model 2: Stance + Performance Metrics",
+       x = "Variable",
+       y = "Estimated Coefficient") + 
+  theme(plot.title = element_text(size = 16, face = "bold", hjust = 0.5),
+        axis.text = element_text(size = 11),
+        axis.title = element_text(size = 12))
+```
+
+Adding performance metrics improves explanatory power to 6.1% (R² = 0.061). Stance remains insignificant. Strike defense (p < 0.001), takedown defense (p < 0.001), and submission attempts (p = 0.014) are the significant predictors. Strikes absorbed per minute has a significant negative effect, meaning taking more damage correlates with fewer wins.
+
+### Model 3: Wins ~ Performance Metrics Only
+
+```{r}
+model3 <- lm(wins ~ significant_strikes_landed_per_minute +
+               significant_strikes_absorbed_per_minute +
+               significant_strike_defence +
+               average_takedowns_landed_per_15_minutes +
+               average_submissions_attempted_per_15_minutes +
+               takedown_defense, data = df2)
+summary(model3)
+
+tidy3 <- tidy(model3)
+tidy3 <- tidy3 |>
+  mutate(term = case_when(
+    term == "significant_strikes_landed_per_minute" ~ "Strikes Landed/min",
+    term == "significant_strikes_absorbed_per_minute" ~ "Strikes Absorbed/min",
+    term == "significant_strike_defence" ~ "Strike Defence %",
+    term == "average_takedowns_landed_per_15_minutes" ~ "Takedowns/15min",
+    term == "average_submissions_attempted_per_15_minutes" ~ "Submissions/15min",
+    term == "takedown_defense" ~ "Takedown Defence %",
+    TRUE ~ term
+  ))
+
+ggplot(tidy3, aes(x = reorder(term, estimate), y = estimate)) +
+  geom_point(color = "#009E73", size = 3) +
+  geom_errorbar(aes(ymin = estimate - std.error, ymax = estimate + std.error),
+                width = 0.2, size = 1) +
+  geom_text(aes(label = round(estimate, 2)),
+            vjust = -1.5,
+            family = "Times New Roman", size = 3.5, color = "gray20") +
+  coord_flip() +
+  theme_classic(base_family = "Times New Roman") +
+  labs(title = "Model 3: Performance Metrics Only",
+       x = "Variable",
+       y = "Estimated Coefficient") +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 14, face = "bold"),
+    axis.text = element_text(size = 11),
+    axis.title = element_text(size = 12)
+  )
+```
+
+Removing stance from the model barely changes the results (R² = 0.056 vs 0.061). The same defensive metrics remain significant. This confirms that stance adds essentially no predictive value once performance is accounted for.
+
+## Conclusion
+
+The analysis consistently shows that fighting stance is not a meaningful predictor of success in the UFC. Raw averages suggest Orthodox fighters win more, but this reflects sample composition rather than any tactical advantage of the stance itself.
+
+What actually predicts wins is defense. Strike defense and takedown defense are the strongest and most consistent predictors across all three models. Taking fewer hits and resisting takedowns matters far more than which foot a fighter leads with.
+
+## References
+
+1. Kaggle (2024). UFC Fighters' Statistics Dataset. https://www.kaggle.com/datasets/aaronfriasr/ufc-fighters-statistics/data
+2. Ultimate Fighting Championship. https://www.ufc.com
+3. Coolors: Color Palette Generator. https://coolors.co
