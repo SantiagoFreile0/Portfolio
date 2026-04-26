@@ -39,17 +39,13 @@ ui <- fluidPage(
       }
     "))
   ),
-  titlePanel("🏡 Real Estate Price Estimator"),
+  titlePanel("Real Estate Price Estimator"),
   h4("By Santiago Freile"),
   tags$div(
     style = "background-color: #ffffff; padding: 15px; border-left: 5px solid #2c3e50; margin-bottom: 15px;",
     HTML("
-      <p><strong>🔍 About this App:</strong></p>
-      <p>This real estate price estimator was created as part of a Data Visualization project at Linfield University. 
-      The model is trained on the <strong>Ames Housing dataset</strong>, a well-known dataset used in the data science community for predictive modeling.</p>
-      <p>💡 <em>Goal:</em> Provide an estimate for the price of a house based on user input, using a linear regression model.</p>
-      <p>📊 <em>Dataset Source:</em> The Ames Housing dataset is included in the <code>AmesHousing</code> R package and contains real housing data from Ames, Iowa.</p>
-      <p>📦 <em>Model:</em> Multiple linear regression trained with key house features such as square footage, number of bedrooms, garage size, and more.</p>
+      <p>Estimate the sale price of a house in Ames, Iowa based on its characteristics.
+      The model uses multiple linear regression trained on the Ames Housing dataset.</p>
     ")
   ),
   sidebarLayout(
@@ -73,16 +69,16 @@ ui <- fluidPage(
       actionButton("predict", "Estimate Price"),
     ),
     mainPanel(
-      tags$h3("📉 Price Distribution of Similar Houses"),
-      tags$p("This plot shows the distribution of sale prices for houses with a similar living area."),
+      tags$h3("Price Distribution of Similar Houses"),
+      tags$p("Distribution of sale prices for houses with a similar living area."),
       plotOutput("histogramPlot"),
       
-      tags$h3("📍 Estimated Price vs Living Area"),
-      tags$p("This scatter plot shows the relationship between living area and price. The red dot represents your estimated house."),
+      tags$h3("Estimated Price vs Living Area"),
+      tags$p("The red dot represents your estimated house."),
       plotOutput("comparisonPlot"),
       
-      tags$h3("🗺️ House Map of Ames, Iowa"),
-      tags$p("This map displays houses similar to yours. The red point represents your selected house."),
+      tags$h3("House Map of Ames, Iowa"),
+      tags$p("Houses similar to yours. The red point represents your selected house."),
       leafletOutput("mapPlot", height = 400),
       tags$div(
         style = "margin-top: 20px; padding: 10px; background-color: #ecf0f1; border-radius: 10px; border: 1px solid #2c3e50;",
@@ -213,4 +209,3 @@ server <- function(input, output) {
 
 # Run the app
 shinyApp(ui = ui, server = server)
-

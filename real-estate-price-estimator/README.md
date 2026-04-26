@@ -1,40 +1,21 @@
-# 🏡 Real Estate Price Estimator
+# Real Estate Price Estimator
 
-🎯 [Try the Live App](https://santiagofreile.shinyapps.io/finalapp/)
+An interactive web application that estimates housing prices based on property characteristics. Built with R and Shiny, trained on the Ames Housing dataset using multiple linear regression.
 
-This is an interactive Shiny web application that estimates real estate prices based on user inputs. The model is trained using the well-known **Ames Housing** dataset and performs multiple linear regression on selected features.
+[Try the Live App](https://santiagofreile.shinyapps.io/finalapp/)
 
----
+What it does
 
-## 📌 Overview
+Users input features like square footage, year built, number of bedrooms, and garage size, and the app returns an estimated sale price. It also shows a histogram of similar houses, a scatter plot of price versus living area, and a map of nearby properties in Ames, Iowa.
 
-The app allows users to input features of a house (like square footage, garage size, year built, etc.) and returns an estimated sale price based on a regression model. It also provides useful visualizations like:
+Technologies
 
-- 📉 Histogram of similar houses
-- 📍 Map with nearby properties
-- 📊 Scatter plot of price vs. living area
+R, Shiny, ggplot2, leaflet, AmesHousing dataset.
 
----
-
-## 🧠 Technologies Used
-
-- **R**
-- **Shiny**
-- **ggplot2**
-- **leaflet**
-- **AmesHousing** (dataset)
-- **Multiple Linear Regression**
-
----
-
-## 🛠️ How to Run Locally
-
-To run the app locally:
-
-1. Clone this repository or download the folder
-2. Open `app.R` in RStudio
-3. Run the app with:
+Run locally
 
 ```r
 shiny::runApp()
+```
 
+Santiago Freile · 2025

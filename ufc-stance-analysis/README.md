@@ -1,36 +1,22 @@
-# 🥋 UFC Data Analysis Project
+# UFC Stance Analysis
 
-## 📈 Interactive Data Exploration in R
+A statistical analysis of UFC fighters exploring whether fighting stance influences competitive success. The short answer: it does not. The longer answer is more interesting.
 
-This project explores data related to UFC fights, using R and R Markdown to analyze fighter statistics, fight outcomes, and performance trends.
+The analysis runs three linear regression models with increasing complexity, a t-test comparing Orthodox and Southpaw win percentages, and a set of visualizations covering performance metrics by stance. The conclusion is that stance explains less than 1% of variance in wins. What actually predicts success is defense. Strike defense and takedown defense are consistently the strongest predictors across all models.
 
-## 🧠 Technologies Used
+Built in R using tidyverse, ggplot2, and plotly. Full analysis available as an interactive HTML report.
 
-- R
-- R Markdown (.Rmd)
-- tidyverse
-- ggplot2
-- dplyr
+Files
 
-## 📌 Features
+- `UFC-analysis.Rmd` — Source code and analysis
+- `UFC-analysis.html` — Rendered output
 
-- Fighter performance comparison
-- Visualizations of strike accuracy, takedowns, and more
-- Win/loss trends over time
-- Exploratory analysis with clean visuals
+## View the Analysis
 
-## 🌐 View the Analysis
-
-You can view the HTML version here:  
-[🔗 UFC-analysis.html](./UFC-analysis.html)
-
-Or knit it locally from the R Markdown file:
+Download UFC-analysis.html and open it in your browser, or knit it locally:
 
 ```r
 rmarkdown::render("UFC-analysis.Rmd")
 ```
 
-📂 Files
-
-- `UFC-analysis.Rmd` — Source code and analysis
-- `UFC-analysis.html` — Rendered output
+Santiago Freile · May 2025
