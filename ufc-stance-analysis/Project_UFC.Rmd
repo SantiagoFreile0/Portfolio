@@ -12,7 +12,7 @@ output:
 
 ## Introduction
 
-Fighters in the UFC adopt different stances — Orthodox, Southpaw, Switch, or Open — that are believed to shape their fighting style. This analysis investigates whether stance significantly influences competitive success. The central question is whether stance actually matters, or whether something else drives wins.
+Fighters in the UFC adopt different stances: Orthodox, Southpaw, Switch, or Open. That are believed to shape their fighting style. This analysis investigates whether stance significantly influences competitive success. The central question is whether stance actually matters, or whether something else drives wins.
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
