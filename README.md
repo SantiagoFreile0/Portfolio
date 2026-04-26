@@ -16,11 +16,7 @@ A relational database system simulating real banking operations across 17 struct
 
 An interactive web application that estimates housing prices based on property characteristics, built with R and Shiny.
 
-4. [OSINT Tool (Python)](./osint-tool)  
-
-A Python tool that automates gathering publicly available information across online platforms.
-
-5. [UFC Stance Analysis (Statistics, Visualization)](./ufc-stance-analysis)  
+4. [UFC Stance Analysis (Statistics, Visualization)](./ufc-stance-analysis)  
 
 A statistical analysis of UFC fighters exploring whether fighting stance correlates with performance outcomes.
 
