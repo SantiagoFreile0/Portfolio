@@ -7,9 +7,9 @@ The analysis runs three linear regression models with increasing complexity, a t
 Built in R using tidyverse, ggplot2, and plotly. Full analysis available as an interactive HTML report.
 
 Files
-· `UFC-analysis.Rmd` — Source code and analysis
-· `UFC-analysis.html` — Rendered output
 
+- `UFC-analysis.Rmd` — Source code and analysis
+- `UFC-analysis.html` — Rendered output
 
 ## View the Analysis
 
