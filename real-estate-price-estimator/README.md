@@ -2,7 +2,7 @@
 
 An interactive web application that estimates housing prices based on property characteristics. Built with R and Shiny, trained on the Ames Housing dataset using multiple linear regression.
 
-🎯 [Try the Live App](https://santiagofreile.shinyapps.io/finalapp/)
+[Try the Live App](https://santiagofreile.shinyapps.io/finalapp/)
 
 What it does
 
@@ -16,5 +16,6 @@ Run locally
 
 ```r
 shiny::runApp()
+```
 
 Santiago Freile · 2025
