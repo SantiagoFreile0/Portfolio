@@ -8,7 +8,7 @@ Welcome to my portfolio. I apply machine learning across different domains, late
 
 A fine-tuned ALBERT model that classifies financial news headlines as bullish or bearish. The project includes full exploratory analysis, stratified data splitting, model training, and behavioral probing experiments that reveal where the model fails and why. Built independently using PyTorch and HuggingFace Transformers.
 
-2. [Bank System Database (SQL, Python, BI Tools)]
+2. [Bank System Database (SQL, Python, BI Tools)](./bank-system-database)
 
 A relational database system simulating real banking operations across 17 structured tables, with views, triggers, and stored procedures. Connected to Python and BI tools for portfolio analysis and dashboards.
 
