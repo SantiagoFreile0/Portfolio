@@ -5,10 +5,10 @@ Welcome to my portfolio. I apply machine learning across different domains, late
 ---
 
 ### [Stock Price Movement Prediction (NLP, PyTorch, ALBERT)](./stock-movement-albert)
-A fine-tuned ALBERT model that classifies financial news headlines as bullish or bearish. The project includes exploratory analysis, stratified data splitting, and behavioral probing experiments that reveal where the model fails and why.
+I fine-tuned ALBERT on financial news headlines to predict whether a stock goes up or down. What I found more interesting than the accuracy was what happens when you feed the model plain English it was never trained on. It fails confidently, and that tells you a lot about what it actually learned.
 
 ### [Image Classification with ResNet-18 (CNN, Transfer Learning, PyTorch)](./resnet18-imagenette)
-A 10-class image classifier using transfer learning on an intentionally imbalanced dataset. Achieves 97.35% overall accuracy. The per-class results tell a more interesting story: minority classes with visually distinctive features still reach 100%, while others drop to 75%.
+I built a 10-class image classifier on a dataset where some classes have 500 training images and others have 20. The overall accuracy is 97.35%, but the per-class results are where things get interesting. The smallest classes either hit 100% or drop to 75%, and the difference comes down to how visually distinct the object is.
 
 ### [Bank System Database (SQL)](./bank-system-database)
 Relational database simulating banking operations across 17 tables. Includes 10 analytical views escalating from simple joins to CTEs, window functions, and nested subqueries.
